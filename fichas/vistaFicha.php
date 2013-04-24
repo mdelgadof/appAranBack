@@ -176,10 +176,11 @@ Seleccionar Categoría
 <?
 		foreach ($categorias as $key => $categoria) {
 			
-			$selected = ($categoria["id"]==$fichaCategorias[$key]) ? "selected":"";
+			$selected = ($categoria["id"]==$fichaCategorias[$i-1]) ? "selected":"";
 ?>
 	<option value="<?= $categoria["id"] ?>" <?= $selected ?>>
-	<?= $categoria["id"].". ".$categoria["nombre"]." ".$key." ".$fichaCategorias[$key]; ?>
+	<!--<?= $categoria["id"].". ".$categoria["nombre"]." ".$key." ".$fichaCategorias[$key]; ?>-->
+	<?= $categoria["nombre"]; ?>
 	</option>
 <?
 		} // END for de todas las categorías disponibles
