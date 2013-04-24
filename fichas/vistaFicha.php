@@ -15,18 +15,18 @@ function vistaFicha($id,$idiomas) {
 	}
 	
 	// Sustituir por BD...
-	$categoria[0]["id"]=1;
-	$categoria[0]["nombre"]="Categoría uno";
-	$categoria[1]["id"]=2;
-	$categoria[1]["nombre"]="Categoría dos";
-	$categoria[2]["id"]=3;
-	$categoria[2]["nombre"]="Categoría tres";
-	$categoria[3]["id"]=4;
-	$categoria[3]["nombre"]="Categoría cuatro";
-	$categoria[4]["id"]=5;
-	$categoria[4]["nombre"]="Categoría cinco";
-	$categoria[5]["id"]=6;
-	$categoria[5]["nombre"]="Categoría seis";
+	$categorias[0]["id"]=1;
+	$categorias[0]["nombre"]="Categoría uno";
+	$categorias[1]["id"]=2;
+	$categorias[1]["nombre"]="Categoría dos";
+	$categorias[2]["id"]=3;
+	$categorias[2]["nombre"]="Categoría tres";
+	$categorias[3]["id"]=4;
+	$categorias[3]["nombre"]="Categoría cuatro";
+	$categorias[4]["id"]=5;
+	$categorias[4]["nombre"]="Categoría cinco";
+	$categorias[5]["id"]=6;
+	$categorias[5]["nombre"]="Categoría seis";
 	
 ?>
 <!--<h1 id="logo">
@@ -162,17 +162,17 @@ Seleccionar Categoría
 </label>
 <div>
 <select id="categoria_id_<?= $i ?>" name="categoria_id_<?= $i ?>" class="field select medium" tabindex="3">
-<option value="" >
-Ninguna
-</option>
+	<option value="" >
+	Ninguna
+	</option>
 <?
 		foreach ($categorias as $key => $categoria) {
 			
 			$selected = ($categoria["id"]==$fichaCategorias[$key]) ? "selected":"";
 ?>
-<option value="<?= $categoria["id"] ?>" <?= $selected ?>>
-<?= $categoria["nombre"]; ?>
-</option>
+	<option value="<?= $categoria["id"] ?>" <?= $selected ?>>
+	<?= $categoria["nombre"]; ?>
+	</option>
 <?
 		} // END for de todas las categorías disponibles
 ?>
