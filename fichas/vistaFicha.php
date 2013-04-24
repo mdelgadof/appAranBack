@@ -179,7 +179,7 @@ Seleccionar Categoría
 			$selected = ($categoria["id"]==$fichaCategorias[$key]) ? "selected":"";
 ?>
 	<option value="<?= $categoria["id"] ?>" <?= $selected ?>>
-	<?= $categoria["nombre"]; ?>
+	<?= $categoria["id"].". ".$categoria["nombre"]." ".$key." ".$fichaCategorias[$key]; ?>
 	</option>
 <?
 		} // END for de todas las categorías disponibles
