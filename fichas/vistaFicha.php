@@ -28,6 +28,14 @@ function vistaFicha($id,$idiomas) {
 	$categorias[5]["id"]=6;
 	$categorias[5]["nombre"]="Categoría seis";
 	
+	// A eliminar...
+	$fichaCategorias[0]=4;
+	$fichaCategorias[1]=2;
+	$fichaCategorias[2]=3;
+	$fichaCategorias[3]=5;
+	$fichaCategorias[4]=6;
+	$fichaCategorias[5]=1;
+	
 ?>
 <!--<h1 id="logo">
 <a href="http://wufoo.com" title="Powered by Wufoo">Wufoo</a>
