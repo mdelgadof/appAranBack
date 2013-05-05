@@ -5,45 +5,66 @@ function vistaFicha($id,$idiomas) {
 	$MAXIMO_CATEGORIAS_X_FICHA = 6;
 	
 	$id = intval($id);
-	$accion = ($id) ? "insertar":"editar";
-	$rotulo = ($id) ? "Insertar nueva ficha":"Edici√≥n de ficha";
+	$accion = ($id) ? "editar":"insertar";
+	$rotulo = ($id) ? "EdiciÛn de ficha":"Insertar nueva ficha";
 
 	$ficha = array();
 	if ($accion=="editar") {
 		// Capturar datos de la ficha desde BD en $ficha
+		$query="SELECT * FROM ficha WHERE id=$id";
+		$ress=mysql_query($query);
+		$ficha=mysql_fetch_array($ress);
+		
 		// Capturar categorias de la ficha desde BD en $fichaCategorias
+		$query="SELECT DISTINCT(idCategoria) FROM fichaCategoria WHERE idFicha=$id";
+		$ress=mysql_query($query);
+		while ($arra=mysql_fetch_array($ress)) {
+			$fichaCategorias[]=$arra["idCategoria"];
+		}
 	}
 	
-	// Sustituir por BD...
-	$categorias[0]["id"]=1;
-	$categorias[0]["nombre"]="Categor√≠a uno";
-	$categorias[1]["id"]=2;
-	$categorias[1]["nombre"]="Categor√≠a dos";
-	$categorias[2]["id"]=3;
-	$categorias[2]["nombre"]="Categor√≠a tres";
-	$categorias[3]["id"]=4;
-	$categorias[3]["nombre"]="Categor√≠a cuatro";
-	$categorias[4]["id"]=5;
-	$categorias[4]["nombre"]="Categor√≠a cinco";
-	$categorias[5]["id"]=6;
-	$categorias[5]["nombre"]="Categor√≠a seis";
-	
-	// A eliminar...
-	$fichaCategorias[0]=4;
-	$fichaCategorias[1]=2;
-	$fichaCategorias[2]=3;
-	$fichaCategorias[3]=5;
-	$fichaCategorias[4]=6;
-	$fichaCategorias[5]=1;
+	// QUERY PARA SACAR CATEGORIAS SIN SUBCATEGORIA Y SUBCATEGORIAS CON NOMBRE DE PADRE DE MOMENTO COMENTADA
+	/*$query="SELECT c.id,cn.nombre,cn2.nombre as nombrePadre 
+		FROM 
+			categoria c 
+			LEFT JOIN categoriaNombre cn ON c.id=cn.idCategoria 
+			LEFT JOIN categoriaNombre cn2 ON cn2.idCategoria=c.idPadre
+		WHERE
+			cn.idIdioma=1 AND
+			(cn2.idIdioma=1 OR cn2.idIdioma IS NULL) AND 
+			(c.idPadre!=0 OR c.id NOT IN 
+				(select distinct(c2.idPadre) from categoria c2)
+			)
+		";*/
+		
+	$query="SELECT c.id,cn.nombre,cn2.nombre as nombrePadre 
+		FROM 
+			categoria c 
+			LEFT JOIN categoriaNombre cn ON c.id=cn.idCategoria 
+			LEFT JOIN categoriaNombre cn2 ON cn2.idCategoria=c.idPadre
+		WHERE
+			cn.idIdioma=1 AND
+			(cn2.idIdioma=1 OR cn2.idIdioma IS NULL)
+		";
+		
+	$ress=mysql_query($query);
+	$i=0;
+	while ($arra=mysql_fetch_array($ress)) {
+		$categorias[$i]["id"]=$arra["id"];
+		if ($arra["nombrePadre"]) 
+			$categorias[$i]["nombre"]=$arra["nombrePadre"]." / ".$arra["nombre"];
+		else $categorias[$i]["nombre"]=$arra["nombre"];
+		$i++;
+	}
 	
 ?>
 <!--<h1 id="logo">
 <a href="http://wufoo.com" title="Powered by Wufoo">Wufoo</a>
 </h1>-->
 
-<form id="form25" name="form25" class="wufoo  page" autocomplete="off" enctype="multipart/form-data" method="post" novalidate
-action="controladorEdicionFicha.php">
+<form name="form25" class="wufoo  page" autocomplete="off" enctype="multipart/form-data" method="post" novalidate action="<?= WEB_ROOT ?>/fichas/controladorEdicionFicha.php">
 <input type="hidden" name="accion" value="<?= $accion ?>">
+<? if ($accion=="editar") { ?><input type="hidden" name="id" value="<?= $id ?>"><? } ?>
 
 <header id="header" class="info">
 <h2><?= $rotulo ?></h2>
@@ -52,7 +73,7 @@ action="controladorEdicionFicha.php">
 
 <ul>
 
-<li id="foli106" class="notranslate">
+<li class="notranslate">
 <label class="desc">
 Nombre
 </label>
@@ -63,19 +84,27 @@ Nombre
 
 <?
 	foreach ($idiomas as $idioma) {
+	
+		if ($accion=="editar") {
+			$query="SELECT texto FROM fichaTexto WHERE idFicha='".$id."' AND idIdioma='".$idioma["id"]."' AND referencia='descripc'";
+			$ress=mysql_query($query);
+			$arra=mysql_fetch_array($ress);
+			$texto=$arra["texto"];
+		}
+		else $texto="";
 ?>
 <li class="notranslate">
 <label class="desc">
-<img src='../images/banderas/<?= $idioma["codigo"] ?>.gif'> Descripci√≥n (<?= $idioma["nombre"] ?>)
+<img src='../imagenes/banderas/<?= $idioma["codigo"] ?>.gif'> DescripciÛn (<?= $idioma["nombre"] ?>)
 </label>
 <div>
-<textarea id="fichaTexto_texto_<?= $idioma["codigo"] ?>_descripcion"
-name="fichaTexto_texto_<?= $idioma["codigo"] ?>_descripcion"
+<textarea id="fichaTexto_texto_<?= $idioma["id"] ?>_descripcion"
+name="fichaTexto_texto_<?= $idioma["id"] ?>_descripcion"
 class="field textarea editable medium"
 spellcheck="true"
 rows="10" cols="50"
 onkeyup=""
- ></textarea>
+ ><?= $texto ?></textarea>
 </div>
 </li>
 <?
@@ -84,7 +113,7 @@ onkeyup=""
 
 <li class="notranslate">
 <label class="desc">
-Direcci√≥n
+DirecciÛn
 </label>
 <div>
 <textarea id="ficha_direccion"
@@ -122,16 +151,16 @@ Longitud
 Web
 </label>
 <div>
-<input type="text" style="width:283px;" value="<?= $ficha["web"] ?>">
+<input type="text" name="ficha_web" style="width:283px;" value="<?= $ficha["web"] ?>">
 </div>
 </li>
 
 <li id="foli108" class="notranslate rightHalf">
 <label class="desc">
-Tel√©fono
+TelÈfono
 </label>
 <div>
-<input type="text" style="width:283px;" value="<?= $ficha["telefono"] ?>">
+<input type="text" name="ficha_telefono" style="width:283px;" value="<?= $ficha["telefono"] ?>">
 </div>
 </li>
 
@@ -166,10 +195,10 @@ Due Date
 ?>
 <li class="notranslate <?= $alineacion ?>Half">
 <label class="desc">
-Seleccionar Categor√≠a
+Seleccionar CategorÌa
 </label>
 <div>
-<select id="categoria_id_<?= $i ?>" name="categoria_id_<?= $i ?>" class="field select medium" tabindex="3">
+<select id="fichaCategoria_id_<?= $i ?>" name="fichaCategoria_id_<?= $i ?>" class="field select medium" tabindex="3">
 	<option value="" >
 	Ninguna
 	</option>
@@ -179,23 +208,22 @@ Seleccionar Categor√≠a
 			$selected = ($categoria["id"]==$fichaCategorias[$i-1]) ? "selected":"";
 ?>
 	<option value="<?= $categoria["id"] ?>" <?= $selected ?>>
-	<!--<?= $categoria["id"].". ".$categoria["nombre"]." ".$key." ".$fichaCategorias[$key]; ?>-->
 	<?= $categoria["nombre"]; ?>
 	</option>
 <?
-		} // END for de todas las categor√≠as disponibles
+		} // END for de todas las categorÌas disponibles
 ?>
 </select>
 </div>
 </li>
 <?
-	} // END for n√∫mero de categor√≠as posibles por ficha
+	} // END for n˙mero de categorÌas posibles por ficha
 ?>
 
 <li class="notranslate">
 <fieldset>
 <label class="desc">
-Est√°tus
+Est·tus
 </label>
 <div>
 <span>

@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+body{
+	text-align:center;
+	font:12px/18px Verdana, Arial;
+	text-align:center;
+}
+
+a{
+	text-decoration:none;
+}
+
+img{
+	border:0px;}
+
+a:hover{
+	text-decoration:underline;
+}
+
+.formulario{
+	margin:auto;
+}

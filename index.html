@@ -1,0 +1,8 @@
+<?
+include('inc/inc.php');
+include(DOCUMENT_ROOT.'templates/headers.php');
+include(DOCUMENT_ROOT.'templates/menu.php');
+if ($_GET[seccion]=='banners') include(DOCUMENT_ROOT.'templates/banners.php');
+elseif ($_GET[seccion]=='categorias') include(DOCUMENT_ROOT.'templates/categorias.php');
+elseif ($_GET[seccion]=='fichas') include(DOCUMENT_ROOT.'fichas/index.php');
+?>
