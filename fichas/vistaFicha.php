@@ -122,10 +122,10 @@ class="field textarea small"
 spellcheck="true"
 rows="10" cols="50"
 tabindex="2"
-onkeyup=""
+onkeyup="$('#ficha_direccion').val($(this).val());$('.perri').show();"
  ><?= $ficha["direccion"] ?></textarea>
 </div>
-<div><input id="generarCoordenadas" name="generarCoordenadas" class="btTxt submit" type="button" value="Generar coordenadas"/></div>
+<div class='perri' style='display:none'><input id="generarCoordenadas" name="generarCoordenadas" class="btTxt submit" type="button" onclick="generaCoordenadas();" value="Generar coordenadas"/></div>
 </li>
 
 <li id="foli1" class="notranslate leftHalf">
@@ -133,7 +133,7 @@ onkeyup=""
 Latitud
 </label>
 <div>
-<input type="text" name="ficha_latitud" value="<?= $ficha["latitud"] ?>" style="width:283px;">
+<input id="ficha_latitud" type="text" name="ficha_latitud" value="<?= $ficha["latitud"] ?>" style="width:283px;"/>
 </div>
 </li>
 
@@ -142,7 +142,7 @@ Latitud
 Longitud
 </label>
 <div>
-<input type="text" name="ficha_longitud" value="<?= $ficha["longitud"] ?>" style="width:283px;">
+<input type="text" id="ficha_longitud" name="ficha_longitud" value="<?= $ficha["longitud"] ?>" style="width:283px;"/>
 </div>
 </li>
 

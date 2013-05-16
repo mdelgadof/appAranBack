@@ -1,4 +1,5 @@
 <?
+include(DOCUMENT_ROOT.'/inc/funcionesImagenes.php');
 if ($_POST[accion]=='insertar'){
 	?><br>&nbsp;<br><?
 	$datos=bannerInserta($_POST, $_FILES[banner]);

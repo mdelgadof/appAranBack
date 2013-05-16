@@ -20,6 +20,27 @@
 		});		
 	}
 	
+	function generaCoordenadas() {
+	
+		t = new Date();
+		
+		dir = $('textarea[name=ficha_direccion]').val();
+		
+		$.ajax({
+			url: "/fichas/ajax_getLongitudLatitud.php",
+			data:"t="+t.getTime()+"&dir="+encodeURIComponent(dir),
+			type: "GET",
+			success: function(dat) {
+				temp=dat.split("|");
+				if (temp[0]==0) alert("Google Maps no ha podido encontrar coordenadas para esta dirección");
+				else if (temp[0]>1) alert("Google Maps da más de una coordenada para esta dirección. Por favor, revisar que la elegida es la correcta");
+				$('input[name="ficha_latitud"]').val(temp[1]);
+				$('input[name="ficha_longitud"]').val(temp[2]);
+				alert("Coordenadas generadas: "+temp[1]+" "+temp[2]);
+			}
+		});	
+	}
+
 	function toggleActivarFicha(id) {
 
 		t = new Date();
