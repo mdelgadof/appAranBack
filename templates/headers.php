@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
-
-<? if ($_GET["seccion"]=="fichas") { ?>
+<title>Sistema de gestión</title>
+<style type="text/css" media="screen"> 
+<!-- @import url( <?=WEB_ROOT?>/css/menu.css ); -->
+</style>
+<? if ($_GET["seccion"]=="fichas" || $_GET["seccion"]=="articulos") { ?>
 
 <!-- Meta Tags -->
 <meta charset="ISO-8859-1">
@@ -45,10 +47,13 @@
 <style type="text/css" media="screen"> 
 <!-- @import url( <?=WEB_ROOT?>/css/estilos.css ); -->
 </style>
+<link href="<?= WEB_ROOT ?>fichas/css/structure.css" rel="stylesheet">
+<link href="<?= WEB_ROOT ?>fichas/css/form.css" rel="stylesheet">
+
 
 <script src='<?=WEB_ROOT?>/js/jquery.js' type='text/javascript'></script>
 <script src="<?=WEB_ROOT?>/js/funciones.js"></script>
 </head>
 
-<body>
+<body id="public">
 <? } ?>

@@ -7,10 +7,18 @@ if (strpos($_SERVER['HTTP_HOST'], 'localhost')!==false || strpos($_SERVER['HTTP_
 }else{
 	session_set_cookie_params(0, '/', $_SERVER['HTTP_HOST']); 
 }
+session_start();
+$dominio="ruralvive.com";
 
 DEFINE("DOCUMENT_ROOT", $_SERVER['DOCUMENT_ROOT'].'/');
 DEFINE("WEB_ROOT", 'http://'.$_SERVER['HTTP_HOST'].'/');
 
+$arrayIdiomas[0][codigo]='en_GB';
+$arrayIdiomas[0][nombre]='Inglés';
+$arrayIdiomas[1][codigo]='fr_FR';
+$arrayIdiomas[1][nombre]='Francés';
+
 include(DOCUMENT_ROOT.'/inc/bbdd.php');
 include(DOCUMENT_ROOT.'/inc/funciones.php');
+if (!$anulaControl) include(DOCUMENT_ROOT.'/templates/control.php');
 ?>

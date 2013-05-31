@@ -81,20 +81,28 @@ if ($_POST[accion]=='insertar'){
 reset($categorias);
 $categorias2=$categorias;
 foreach($categorias as $categoria){
+	if ($categoria[nivel]!=$anteriorNivel){
+		if ($categoria[nivel]>$anteriorNivel){
+			echo "<ul>";
+		}
+		if ($categoria[nivel]<$anteriorNivel){
+			echo "</ul>";
+		}
+		$anteriorNivel=$categoria[nivel];
+	}
 	?>
 	<form name='actualiza<?=$categoria[id]?>' id='actualiza<?=$categoria[id]?>' method='POST' action=''>
 		<input type='hidden' name='accion' id='accion' value='actualizar'>
 		<input type='hidden' name='id' id='accion' value='<?=$categoria[id]?>'>
 		<?
-		for($i=0; $i<$categoria[nivel]; $i++){ ?> &nbsp; &nbsp; &nbsp; &nbsp; <? };
-		echo " - ";
+		echo "<li>";
 		foreach($categoria[nombres] as $nombre){
 			?>
-			<?=$nombre[nombreIdioma]?> <input type='text' name='nombre-<?=$nombre[codigo]?>' value='<?=$nombre[nombre]?>'>, 
+			<?=$nombre[nombreIdioma]?>: <input type='text' name='nombre-<?=$nombre[codigo]?>' value='<?=$nombre[nombre]?>'> -  
 			<?
 		}
 		reset($categorias2);
-		?>
+		?><br>
 		Depende de 
 		<select name='padre' id='padre'>
 			<option value='0'>Raiz</option>
@@ -107,11 +115,12 @@ foreach($categorias as $categoria){
 			?>
 		</select>
 		<input type='submit' value='Actualiza'>
-		<input type='button' value='Elimina' onClick="javascript:elimina('<?=$categoria[id]?>');">
+		<input type='button' value='Elimina' onClick="javascript:elimina('<?=$categoria[id]?>');"></li>
 	</form>
 	<?
 }
 ?>
+</ul></ul>
 </div>
 
 <script>

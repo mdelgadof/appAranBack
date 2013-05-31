@@ -53,7 +53,6 @@ function redimensionar_img($img_original, $img_nueva, $dimension, $img_nueva_cal
 	  
 
 	 // Creamos la imagen en el lienzo redimensionado
-
 	 @imagecopyresampled($imageResized, $img, 0, 0, 0, 0, $nueva_anchura, $nueva_altura, @ImageSX($img), @ImageSY($img));
 	  
 

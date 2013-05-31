@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?= WEB_ROOT ?>fichas/funciones.js"></script>
 <div id="container" class="ltr">
 
 <?
@@ -33,9 +34,31 @@ while ($arra=mysql_fetch_array($ress)) {
 <div id="editarFicha" style="display:block">
 <? if ($id) {
 	vistaFicha($id,$idiomas);
+	?>
+	<div id='listadoImagenes' style='clear:both;'></div>
+	<br>&nbsp;<br>
+	<form style='clear:both;' action='<?=WEB_ROOT?>fichas/cuadro.php' name='formImagen' method="post" enctype="multipart/form-data" target="frameImagen">
+		<input type='hidden' name='id' value='<?=$id?>'>
+		<input type='hidden' name='accion' value='sube'>
+		<table align='center'>
+			<tr>
+				<td align='right'><?php echo "Insertar foto"; ?>: </td>
+				<td align='left'><input type='file' name='imagen' id='imagen'></td>
+			</tr>
+			<tr>
+				<td align='right'></td>
+				<td align='right'><input type='submit' value='Subir'></td>
+			</tr>
+		</table>
+		<br>
+	</form>
+	<script>
+		cargaImagenes('<?=$id?>');
+	</script>
+	<iframe src='' name='frameImagen' id='frameImagen' width='0' height='0'></iframe>
+	<?
 } ?>
 </div>
 
 </div><!--container-->
 
-<script type="text/javascript" src="<?= WEB_ROOT ?>fichas/funciones.js"></script>

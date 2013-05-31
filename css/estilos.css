@@ -11,7 +11,8 @@ a{
 }
 
 img{
-	border:0px;}
+	border:0px;
+}
 
 a:hover{
 	text-decoration:underline;
@@ -19,4 +20,16 @@ a:hover{
 
 .formulario{
 	margin:auto;
+}
+
+#contenedor{
+	background:#fff;
+	border:1px solid #ccc;
+	padding:20px;
+	margin:auto;
+	width:800px;
+	-webkit-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+	-moz-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+	-o-box-shadow:rgba(0,0,0,0.2) 0px 0px 5px;
+	box-shadow:rgba(0,0,0,0.2) 0px 0px 5px
 }

@@ -217,8 +217,8 @@ if ($_POST[accion]=='filtrar'){
 							?>
 						</select>
 					</td>
-					<td><input type='text' name='fechaInicio' id='fechaInicio' value='<?=volteaFecha($banner[fechaInicio])?>'></td>
-					<td><input type='text' name='fechaFin' id='fechaFin' value='<?=volteaFecha($banner[fechaFin])?>'></td>
+					<td><input type='text' name='fechaInicio' size='10' id='fechaInicio' value='<?=volteaFecha($banner[fechaInicio])?>'></td>
+					<td><input type='text' name='fechaFin' size='10' id='fechaFin' value='<?=volteaFecha($banner[fechaFin])?>'></td>
 					<td>
 						<select name='activo' id='activo'>
 							<option value='si' <? if ($banner[activo]=='si') echo 'SELECTED'; ?>>Si</option>
@@ -228,6 +228,7 @@ if ($_POST[accion]=='filtrar'){
 					<td>
 						<input type='submit' value='Actualizar'>
 						<input type='button' value='Eliminar' onClick="javascript:elimina('<?=$banner[id]?>');">
+						<input type='button' value='Ver estadísticas' onClick="javascript:abreEstadisticas('<?=$banner[id]?>');">
 					</td>
 				</tr>
 				</form>
@@ -250,3 +251,8 @@ if ($_POST[accion]=='filtrar'){
 	}
 }
 ?>
+<script>
+	function abreEstadisticas(idBanner){
+		window.open("<?=WEB_ROOT?>/templates/estadisticas.php?idBanner="+idBanner,"estadisticas","width=300,height=500") 
+	}
+</script>

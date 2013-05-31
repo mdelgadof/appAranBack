@@ -1,0 +1,2 @@
+msgid "Algo"
+msgstr "Something"
